@@ -111,3 +111,10 @@
   its candidate release to `1.uke2`. A source/RPM collection result cannot prove
   native dependency closure or compilation.
 - Next validation: replacement native compilation and signed runtime audit.
+- Superseding diagnosis: inspection of the original source spec showed
+  `BuildRequires: meson gcc`. The initial pinning adapter replaced the entire
+  multi-dependency line and accidentally removed GCC. The adapter now preserves
+  the complete original BuildRequires and adds the exact host pin separately,
+  including for GObject-introspection. The earlier statement that the inherited
+  libwacom spec omitted GCC was incorrect. This is an adapter defect, not an
+  upstream packaging defect. The explicit GCC requirement remains harmless.
