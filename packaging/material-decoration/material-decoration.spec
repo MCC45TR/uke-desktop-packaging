@@ -2,12 +2,13 @@
 
 Name:           material-decoration
 Version:        20260918.151422
-Release:        1.uke%{?dist}
+Release:        2.uke%{?dist}
 Summary:        Material window decoration and configuration for KWin 6
 License:        GPL-2.0-or-later AND LGPL-2.0-or-later
 URL:            https://github.com/guiodic/material-decoration
 Source0:        https://codeload.github.com/guiodic/material-decoration/tar.gz/%{upstream_commit}#/material-decoration-%{upstream_commit}.tar.gz
 Source1:        material-decoration-source-lock.json
+Patch0:         0001-declare-Qt-Qml-imports.patch
 ExclusiveArch:  aarch64
 
 BuildRequires:  cmake
@@ -21,6 +22,7 @@ BuildRequires:  libepoxy-devel
 BuildRequires:  libdrm-devel
 BuildRequires:  vulkan-loader-devel
 BuildRequires:  qt6-qtbase-devel
+BuildRequires:  qt6-qtdeclarative-devel
 BuildRequires:  qt6-qttools-devel
 BuildRequires:  kf6-kcmutils-devel
 BuildRequires:  kf6-kconfig-devel
@@ -40,7 +42,7 @@ activate the decoration, and it does not replace Fedora KDE packages.
 
 %prep
 test "$(sha256sum %{SOURCE0} | cut -d ' ' -f1)" = "$(jq -er .sha256 %{SOURCE1})"
-%autosetup -n material-decoration-%{upstream_commit}
+%autosetup -p1 -n material-decoration-%{upstream_commit}
 # KPlugin derives the decoration ID from materialdecoration.so. Upstream's
 # embedded, differently named ID floods System Settings with warnings.
 # Keep this conditional on the metadata shape and safe when upstream fixes it.
@@ -69,6 +71,9 @@ test -f %{buildroot}%{_libdir}/qt6/plugins/org.kde.kdecoration3.kcm/materialdeco
 %{_datadir}/applications/*material*desktop
 
 %changelog
+* Mon Oct 05 2026 Senemos Maintainers <75160848+MCC45TR@users.noreply.github.com> - 20260918.151422-2.uke
+- Declare Qt QML imports required by Rawhide KF6 I18n's exported targets.
+
 * Mon Oct 05 2026 Senemos Maintainers <75160848+MCC45TR@users.noreply.github.com> - 20260918.151422-1.uke
 - Package the verified published upstream stable release for the Uke channel.
 - Retain upstream GPL/LGPL source and the attributed KPlugin metadata correction.

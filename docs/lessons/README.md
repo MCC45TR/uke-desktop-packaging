@@ -47,3 +47,24 @@
 - Uncertainty: the corrected factory still requires its own remote collection
   and binary build results; local source success is not substituted for them.
 - Next validation: collect replacement source jobs and audit signed target packages.
+
+## UKE-DESKTOP-004 — current KF6 exports require explicit Qt QML imports
+
+- Date: 2026-10-05.
+- Environment: published upstream stable source and native Rawhide AArch64 COPR.
+- Evidence: binary build 11075055 stopped in CMake generation because
+  `KF6::I18nQml` referenced the undefined `Qt6::QmlIntegration` target.
+- Finding: the stable project's Qt Widgets/DBus declaration did not create the
+  QML targets exported by the current KF6 I18n toolchain.
+- Consequence: an attributed small CMake patch explicitly imports Qt Qml and
+  QmlIntegration; the spec adds official qt6-qtdeclarative-devel and increments
+  its release. The SRPM retains the patch as an inspectable separate source.
+- Uncertainty: successful source preparation alone does not establish the
+  corrected C++ binary build, plugin load, dependency closure or rendering.
+- Next validation: build the corrected native RPM, inspect its ELF/plugins and
+  validate its signed target package transaction.
+- Correction evidence: the first local patch trial had an incorrect unified-diff
+  hunk count and was rejected by RPM preparation. Correcting the count allowed
+  zero-fuzz application. An EOF blank context line then failed publication's
+  whitespace check; narrowing the context removed it. Original failed logs and
+  the corrected preparation are retained separately.

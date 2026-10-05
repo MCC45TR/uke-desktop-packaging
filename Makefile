@@ -24,6 +24,7 @@ srpm: validate
 		test "$$(sha256sum "$$archive" | cut -d ' ' -f1)" = "$$(jq -er .sha256 manifests/material-decoration.json)"
 		cp "$$archive" "$$top/SOURCES/material-decoration-$$commit.tar.gz"
 		cp manifests/material-decoration.json "$$top/SOURCES/material-decoration-source-lock.json"
+		cp packaging/material-decoration/*.patch "$$top/SOURCES/"
 	else
 		tar --sort=name --mtime=@1791158400 --owner=0 --group=0 --numeric-owner -cJf "$$top/SOURCES/plymouth-uke-1.0.0.tar.xz" --transform 's,^,plymouth-uke-1.0.0/,' LICENSE README.md src/plymouth-uke
 	fi
@@ -40,6 +41,7 @@ track-stable:
 	curl -fsSL --retry 3 "https://api.github.com/repos/guiodic/material-decoration/commits/$$tag" -o build/tracking/commit.json
 	commit=$$(jq -er '.sha | select(test("^[a-f0-9]{40}$$"))' build/tracking/commit.json)
 	version=$$(jq -er '.published_at' build/tracking/release.json | date -u -f - +%Y%m%d.%H%M%S)
+	[[ "$$version" > "$$(jq -er .version manifests/material-decoration.json)" ]] || { echo 'Stable source version did not advance' >&2; exit 1; }
 	archive="$(CURDIR)/referances/material-decoration/$$commit.tar.gz"
 	mkdir -p "$$(dirname "$$archive")"
 	curl -fL --retry 3 "https://codeload.github.com/guiodic/material-decoration/tar.gz/$$commit" -o "$$archive.part"
