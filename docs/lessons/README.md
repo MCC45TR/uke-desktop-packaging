@@ -226,3 +226,8 @@
   library or target-root acceptance. KDE application targets remain withdrawn.
 - Next validation: native AArch64 compilation, full ABI and smoke gates, signed
   payload audit and a complete isolated console-root lifecycle test.
+- Superseding recipe correction: trial 11076948 still failed the two-export
+  gate because upstream clears `MAKEOVERRIDES` and did not forward the top-level
+  `CXX` override to recursive modules. Pass `-nostdinc++` through `CXXFLAGS`,
+  explicitly forwarded by `AM_MAKEFLAGS`. This preserves the observed header
+  diagnosis while correcting the ineffective first recipe.

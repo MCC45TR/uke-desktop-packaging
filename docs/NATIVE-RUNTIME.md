@@ -114,3 +114,8 @@ with `-nostdinc++`; both real module objects then exported their initialization
 functions. The standalone library build now isolates its generated C++ headers
 while leaving configure probes unchanged. This host experiment does not replace
 native AArch64 compilation, the original 6,100-symbol gate or root acceptance.
+
+Trial 11076948 demonstrated that upstream clears `MAKEOVERRIDES`: a top-level
+`CXX` override did not reach the recursive module build, which again failed the
+unchanged two-export gate. The recipe now appends header isolation through
+`CXXFLAGS`, which upstream explicitly forwards in `AM_MAKEFLAGS`.

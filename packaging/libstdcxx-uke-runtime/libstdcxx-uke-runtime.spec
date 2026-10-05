@@ -56,7 +56,9 @@ grep -Fx '#define _GLIBCXX_HAS_GTHREADS 1' config.h
 # system C declarations and make upstream silently replace both std modules
 # with empty objects. Configure probes use the host compiler normally; only
 # the actual library build isolates its C++ header search.
-%make_build CXX='g++ -nostdinc++'
+# Upstream clears MAKEOVERRIDES and forwards CXXFLAGS explicitly. Passing only
+# CXX at the top level would lose this isolation in recursive module builds.
+%make_build CXXFLAGS="$CXXFLAGS -nostdinc++"
 %check
 cd senemos-libstdcxx-build
 nm -D --defined-only src/.libs/libstdc++.so.6.0.36 | awk '{print $3}' | grep '@' | LC_ALL=C sort -u > native-symbols.txt
