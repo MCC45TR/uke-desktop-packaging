@@ -50,7 +50,7 @@
       "name": "dolphin",
       "version": "26.08.1",
       "release": "1.fc46",
-      "native_release": "1.uke1",
+      "native_release": "1.uke2",
       "sha256": "63bc209615c39f7e928b5f42728a7da5ae25a0748d67557be6ee58fb362bd5e0",
       "delta": "Replace toolbar and split-view shortcut configuration migrations with atomic native C++/Qt helpers"
     }

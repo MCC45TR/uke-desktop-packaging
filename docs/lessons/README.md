@@ -133,3 +133,19 @@
 - Uncertainty: host GDB's Python convenience layer is outside this native SDK.
 - Next validation: inspect every generated binary RPM, then the actual selected
   complete runtime. Neither successful C compilation nor one subpackage suffices.
+
+## UKE-DESKTOP-008 — classify conservative privacy matches accurately
+
+- Date: 2026-10-05.
+- Environment: signed Dolphin job 11075175 extracted documentation.
+- Evidence: native C++ compilation, signatures and no-Python payload audit passed.
+  The conservative privacy scan rejected translated HTML tutorial text; inspected
+  English content contains the public upstream example `/home/USER/` with a
+  sample person name. This is not evidence of a leaked worker or owner identity.
+- Consequence: the lean native runtime excludes optional translated HTML
+  tutorials, retains UI translations, native help metadata, standard licensing
+  and README, and keeps the complete documentation in the pinned source RPM.
+  Release `1.uke2` receives this explicit packaging scope change. No broad privacy
+  scan exemption is introduced and no source documentation is rewritten.
+- Uncertainty: this mobile runtime does not provide Dolphin's offline HTML manual.
+- Next validation: re-run signed native payload/privacy and full runtime gates.

@@ -43,6 +43,7 @@ for helper in dolphin_replace_view_mode_with_view_settings_in_toolbar dolphin_ta
     install -Dm755 senemos-dolphin-migration %{buildroot}%{_libdir}/kconf_update_bin/$helper
     sed -i "s/Script=$helper.py/Script=$helper/" %{buildroot}%{_kf6_datadir}/kconf_update/$helper.upd
 done
+find %{buildroot}%{_datadir}/doc/HTML -mindepth 2 -maxdepth 2 -type d -name dolphin -exec rm -rf {} +
 CLEAN
 );;
     *) exit 2;;
@@ -91,6 +92,7 @@ awk -v name="$name" -v release="$native_release" -v cleanup="$cleanup" '
         print "%{_libdir}/kconf_update_bin/dolphin_tab_key_shortcut_for_focus_other_view"
         next
     }
+    name=="dolphin" && /^%find_lang/ { sub(/--with-html/, ""); print; next }
     /^%changelog/ {
         print
         print "* Mon Oct 05 2026 Senemos Maintainers <75160848+MCC45TR@users.noreply.github.com> - %{version}-" release
