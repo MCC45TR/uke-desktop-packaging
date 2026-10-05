@@ -51,7 +51,12 @@ export CFLAGS="%{build_cflags}" CXXFLAGS="%{build_cxxflags}" LDFLAGS="%{build_ld
   --enable-shared --enable-libstdcxx-threads=yes --enable-libstdcxx-backtrace \
   --with-libstdcxx-zoneinfo=%{_datadir}/zoneinfo --disable-libstdcxx-pch
 grep -Fx '#define _GLIBCXX_HAS_GTHREADS 1' config.h
-%make_build
+# A standalone installed compiler would otherwise search its own C++ headers
+# after these generated headers. Duplicate fenv.h include guards suppress the
+# system C declarations and make upstream silently replace both std modules
+# with empty objects. Configure probes use the host compiler normally; only
+# the actual library build isolates its C++ header search.
+%make_build CXX='g++ -nostdinc++'
 %check
 cd senemos-libstdcxx-build
 nm -D --defined-only src/.libs/libstdc++.so.6.0.36 | awk '{print $3}' | grep '@' | LC_ALL=C sort -u > native-symbols.txt

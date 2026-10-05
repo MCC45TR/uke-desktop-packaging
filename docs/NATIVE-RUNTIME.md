@@ -104,3 +104,13 @@ symbol gate: the standalone configure probe could not find GCC's generated
 source preparation now creates the POSIX header as the top-level GCC build
 does; configure must explicitly define `_GLIBCXX_HAS_GTHREADS` before compilation.
 The original symbol baseline is retained unchanged.
+
+Native trial 11076770 restored the thread symbols but failed on the two
+`std`/`std.compat` module initialization exports. Its module compilation first
+reported missing C floating-point environment declarations, then upstream's
+fallback built empty objects. A local GCC 16.2.1 header probe reproduced 81
+diagnostic lines with the installed compiler's C++ include search and zero
+with `-nostdinc++`; both real module objects then exported their initialization
+functions. The standalone library build now isolates its generated C++ headers
+while leaving configure probes unchanged. This host experiment does not replace
+native AArch64 compilation, the original 6,100-symbol gate or root acceptance.

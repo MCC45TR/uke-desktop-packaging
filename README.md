@@ -32,10 +32,10 @@ Neither decoration compilation nor theme installation proves Uke graphics or boo
 · [Development COPR](https://copr.fedorainfracloud.org/coprs/mcc45tr/uke-linux-test/)
 
 Five admitted [native runtime source variants](docs/NATIVE-RUNTIME.md) are owned here:
-`at-spi2-core`, `gstreamer1`, `libaccounts-glib`, `libwacom`, `plasma-workspace`
+`at-spi2-core`, `gstreamer1`, `libaccounts-glib`, `libwacom`
 and `libstdcxx-uke-runtime` producing native `libstdc++`.
 The reviewed complete Fedora sources retain their native APIs;
-optional Python bindings/host utilities are excluded and required configuration
+optional Python bindings/host utilities are excluded. Historical KDE configuration
 migrations have C++ equivalents. Their target acceptance remains separate from
 source registration. A GitHub Actions workflow explicitly requests these five
 builds after shared adapter/manifest changes, because a package-subdirectory
@@ -48,7 +48,7 @@ The [package testing procedure](docs/PACKAGE-TESTING.md) requires both the
 selected RPM closure and the complete installed root. The original 603-input
 transaction passed its input audit and lifecycle fixtures, but its base image
 contained optional Python GDB helpers in libstdc++; complete-root acceptance
-was rejected. The seventh native source addresses that independent base-image
+was rejected. The GNU C++ source addresses that independent base-image
 gate. Current accepted and failed results are recorded by the builder.
 
 The owner forbids cloning, forking or rebuilding KDE desktop applications as Uke

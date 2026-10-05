@@ -206,3 +206,23 @@
   6,100-symbol baseline because GCC's standalone thread probe lacked the
   generated POSIX header. Preparation now creates that header and requires the
   thread macro before compilation. No ABI baseline is reduced to pass the test.
+
+## UKE-DESKTOP-011 — isolate standalone GNU C++ build headers
+
+- Date: 2026-10-05.
+- Environment: native Rawhide AArch64 COPR 11076770 and a local GCC 16.2.1
+  x86_64 configure/header/module experiment.
+- Evidence: all thread exports returned after the generated POSIX header fix,
+  but the strict 6,100-symbol comparison rejected the two module initialization
+  exports. The compiler reported missing C fenv declarations; upstream then
+  silently substituted empty module objects. Locally, the default installed
+  C++ header search reproduced 81 diagnostic lines. `-nostdinc++` with the
+  generated build headers produced zero diagnostics, compiled both real
+  modules and exported `_ZGIW3std` and `_ZGIW3stdW6compat`.
+- Consequence: pass `CXX='g++ -nostdinc++'` only to the library make step;
+  configure probes retain their normal host compiler search. Preserve every
+  original required symbol and keep empty-object fallbacks inadmissible.
+- Uncertainty: the local objects are x86_64 host evidence, not native AArch64
+  library or target-root acceptance. KDE application targets remain withdrawn.
+- Next validation: native AArch64 compilation, full ABI and smoke gates, signed
+  payload audit and a complete isolated console-root lifecycle test.
