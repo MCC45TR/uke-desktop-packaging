@@ -8,14 +8,23 @@ profile=$(jq -ce --arg name "$name" '.packages[] | select(.name==$name)' "$proje
 version=$(jq -er .version <<< "$profile")
 release=$(jq -er .release <<< "$profile")
 native_release=$(jq -er .native_release <<< "$profile")
-archive="$project/referances/fedora-srpms/$name-$version-$release.src.rpm"
+source_name=$(jq -er '.source_name // .name' <<< "$profile")
+archive="$project/referances/fedora-srpms/$source_name-$version-$release.src.rpm"
 mkdir -p "$top"/{BUILD,BUILDROOT,RPMS,SRPMS,SOURCES,SPECS} "$(dirname "$archive")"
 if [[ ! -s $archive ]]; then
-    curl -fL --retry 3 "https://kojipkgs.fedoraproject.org/packages/$name/$version/$release/src/$name-$version-$release.src.rpm" -o "$archive.part"
+    curl -fL --retry 3 "https://kojipkgs.fedoraproject.org/packages/$source_name/$version/$release/src/$source_name-$version-$release.src.rpm" -o "$archive.part"
     mv "$archive.part" "$archive"
 fi
 [[ $(sha256sum "$archive" | cut -d ' ' -f1) == "$(jq -er .sha256 <<< "$profile")" ]]
-(cd "$top/SOURCES"; rpm2cpio "$archive" | cpio -idm --quiet)
+(cd "$top/SOURCES"; rpm2cpio "$archive" | cpio -idmu --quiet)
+if [[ $name == libstdcxx-uke-runtime ]]; then
+    cp "$project/packaging/$name/$name.spec" "$top/SPECS/"
+    cp "$project/src/native-runtime/runtime-smoke.cpp" "$top/SOURCES/"
+    cp "$project/src/native-runtime/fedora-exported-symbols.txt" "$top/SOURCES/"
+    cp "$archive" "$top/SOURCES/"
+    rpmbuild -bs --nodeps --target aarch64 --define "_topdir $top" "$top/SPECS/$name.spec"
+    exit 0
+fi
 spec="$top/SOURCES/$name.spec"
 [[ -s $spec ]]
 case $name in

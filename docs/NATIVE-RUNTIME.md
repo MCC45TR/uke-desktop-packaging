@@ -6,7 +6,7 @@ An extracted official-RPM inventory also found Dolphin migration scripts even
 though they did not declare a Python dependency. That transaction failed the
 project's target acceptance gate; it is not an accepted tablet environment.
 
-`manifests/native-runtime.json` pins six complete official Fedora Koji source
+`manifests/native-runtime.json` pins seven complete official Fedora Koji source
 RPMs by exact NEVRA and SHA-256. Sources remain under this component's ignored
 `referances/fedora-srpms/`. The section-aware host adapter derives inspectable
 specifications in `build/`; native C/C++ applications and libraries are actually
@@ -46,6 +46,7 @@ The inspected Rawhide host pins are:
 | python3 | 3.15.0~rc2-1.fc46 | Upstream build engine/runtime |
 | meson | 1.12.1-2.fc46 | Mandatory upstream native build descriptions |
 | gobject-introspection-devel | 1.86.0-12.fc46 | Generate native typelib metadata |
+| gcc-c++ | 16.2.1-2.fc46.1 | Compile the exact reviewed GNU C++ runtime source |
 
 These pins are added to the appropriate generated BuildRequires. A missing pin
 stops a build and requires an explicit reviewed host-tool update. COPR logs
@@ -67,3 +68,25 @@ which are not evidence of leaked builder or owner identities. Runtime binaries
 and the complete selected dependency payload are audited separately from those
 host documentation artifacts. The public test report identifies the exact
 admitted source jobs and runtime package hashes.
+
+## Base-image GNU C++ runtime
+
+A complete installed-root audit rejected the first desktop environment even
+after all 603 newly selected RPMs passed: the base image already contained 15
+Python GDB helper files from `libstdc++-16.2.1-2.fc46.1`. The original deferred
+transaction therefore does not qualify a complete Python-free target root.
+
+`libstdcxx-uke-runtime` uses the exact official GCC source RPM and compiles the
+native `libstdc++-v3` shared library as a standalone build. The inherited libtool
+no-rpath patch applies to this build; other Fedora patches concern compilers,
+other languages or optional manuals. The complete original source RPM remains
+in the rebuildable SRPM. Runtime selection installs only the newly compiled
+library and its SONAME link, plus standard source licenses, so Python printers
+are absent by construction. This is not a converted binary package or a
+post-install deletion of RPM-owned files.
+
+The build must preserve all 6,100 versioned exported symbols recorded from the
+original AArch64 Fedora library and execute the native C++ concurrency,
+exception, filesystem, ranges and calendar fixture. The baseline text hash is
+`db74b5e1acc6e2a6ce6182c63d57ad61cc79278daa811c0fde65bd0a411ec1fd`.
+ABI, signed payload and complete installed-root checks remain independent.

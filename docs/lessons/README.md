@@ -149,3 +149,29 @@
   scan exemption is introduced and no source documentation is rewritten.
 - Uncertainty: this mobile runtime does not provide Dolphin's offline HTML manual.
 - Next validation: re-run signed native payload/privacy and full runtime gates.
+
+## UKE-DESKTOP-009 — audit the inherited base, not only new RPM inputs
+
+- Date: 2026-10-05.
+- Environment: pinned Rawhide AArch64 base, offline full desktop replay and host installed-root audit.
+- Evidence: all 603 selected RPMs passed signatures and extracted no-Python
+  checks. Fresh installation, six capabilities, native AArch64 migration
+  fixtures, actual signed meta release-1 to release-2 upgrade and admitted
+  package removal passed. The full installed `usr/` and `etc/` audit then failed
+  on 15 Python/PYC GDB helper files already owned by the base's
+  `libstdc++-16.2.1-2.fc46.1`. Package-name checks cannot detect those helpers.
+- Consequence: that complete root is rejected. The official
+  `gcc-16.2.1-2.fc46.1.src.rpm`, SHA-256
+  `b8f6cc1f055a057233a3b807bf5e9cc2a43836c025ba664b1231c79d86271175`,
+  supplies a real standalone native C++ library build. Its target selection
+  excludes debugger scripts, preserves standard library ABI and requires all
+  6,100 original versioned symbols plus a native C++ smoke fixture.
+- Correction: earlier console/kernel package reports checked their own
+  payloads and installed package names; those results do not establish that
+  the entire inherited Fedora root contains no Python script. Preserve the
+  successful bounded checks and this superseding complete-root rejection.
+- Uncertainty: the new native source, signatures, replacement/removal of old
+  RPM-owned helpers and complete root still require acceptance. A library smoke
+  fixture does not establish Plasma startup or physical Uke support.
+- Next validation: build the seventh source, require its capability from the
+  core meta and repeat complete root, dependency and lifecycle gates.

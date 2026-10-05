@@ -53,6 +53,20 @@
       "native_release": "1.uke2",
       "sha256": "63bc209615c39f7e928b5f42728a7da5ae25a0748d67557be6ee58fb362bd5e0",
       "delta": "Replace toolbar and split-view shortcut configuration migrations with atomic native C++/Qt helpers"
+    },
+    {
+      "name": "libstdcxx-uke-runtime",
+      "source_name": "gcc",
+      "version": "16.2.1",
+      "release": "2.fc46.1",
+      "native_release": "2.uke1",
+      "sha256": "b8f6cc1f055a057233a3b807bf5e9cc2a43836c025ba664b1231c79d86271175",
+      "delta": "Compile the native GNU C++ runtime without optional GDB Python helpers; verify the original versioned symbol set and run a native smoke fixture"
     }
-  ]
+  ],
+  "baseline": {
+    "package": "libstdc++-16.2.1-2.fc46.1.aarch64",
+    "symbol_count": 6100,
+    "symbol_sha256": "db74b5e1acc6e2a6ce6182c63d57ad61cc79278daa811c0fde65bd0a411ec1fd"
+  }
 }

@@ -12,6 +12,7 @@ on:
       - packaging/libwacom/**
       - packaging/plasma-workspace/**
       - packaging/dolphin/**
+      - packaging/libstdcxx-uke-runtime/**
   workflow_dispatch:
 permissions:
   contents: read
@@ -25,12 +26,12 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Validate approved source pins
         run: make validate
-      - name: Request all six reviewed native source builds
+      - name: Request all seven reviewed native source builds
         env:
           COPR_NATIVE_BUILD_HOOK_BASE: ${{ secrets.COPR_NATIVE_BUILD_HOOK_BASE }}
         run: |
           set -Eeuo pipefail
           test -n "$COPR_NATIVE_BUILD_HOOK_BASE"
-          for package in at-spi2-core gstreamer1 libaccounts-glib libwacom plasma-workspace dolphin; do
+          for package in at-spi2-core gstreamer1 libaccounts-glib libwacom plasma-workspace dolphin libstdcxx-uke-runtime; do
             curl -fsS --retry 2 -X POST "$COPR_NATIVE_BUILD_HOOK_BASE/$package/" >/dev/null
           done

@@ -1,6 +1,6 @@
 # Uke desktop package sources
 
-This repository owns two real source families for Fedora Rawhide AArch64:
+This repository owns decoration, theme and native runtime sources for Fedora Rawhide AArch64:
 
 - `material-decoration`: optional upstream C++20/Qt6 KWin decoration and KCM.
   Source is pinned to the published upstream release in
@@ -31,14 +31,22 @@ Neither decoration compilation nor theme installation proves Uke graphics or boo
 [Uke package hub](https://github.com/MCC45TR/uke-linux/blob/main/docs/PACKAGE-HUB.md)
 · [Development COPR](https://copr.fedorainfracloud.org/coprs/mcc45tr/uke-linux-test/)
 
-Six [native runtime source variants](docs/NATIVE-RUNTIME.md) are also owned here:
+Seven [native runtime source variants](docs/NATIVE-RUNTIME.md) are also owned here:
 `at-spi2-core`, `gstreamer1`, `libaccounts-glib`, `libwacom`, `plasma-workspace`
-and `dolphin`. The reviewed complete Fedora sources retain their native APIs;
+and `dolphin`, plus `libstdcxx-uke-runtime` producing native `libstdc++`.
+The reviewed complete Fedora sources retain their native APIs;
 optional Python bindings/host utilities are excluded and required configuration
 migrations have C++ equivalents. Their target acceptance remains separate from
-source registration. A GitHub Actions workflow explicitly requests all six
+source registration. A GitHub Actions workflow explicitly requests all seven
 builds after shared adapter/manifest changes, because a package-subdirectory
 push hook alone may not observe repository-root source changes. The hook value
 is held only in an encrypted repository secret. Healthy COPR jobs are preserved.
 These sources use reviewed Fedora pins; automatic builds do not silently admit
 arbitrary new Fedora source recipes or assert physical hardware support.
+
+The [package testing procedure](docs/PACKAGE-TESTING.md) requires both the
+selected RPM closure and the complete installed root. The original 603-input
+transaction passed its input audit and lifecycle fixtures, but its base image
+contained optional Python GDB helpers in libstdc++; complete-root acceptance
+was rejected. The seventh native source addresses that independent base-image
+gate. Current accepted and failed results are recorded by the builder.
