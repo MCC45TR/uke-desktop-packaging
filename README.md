@@ -35,8 +35,7 @@ Five admitted [native runtime source variants](docs/NATIVE-RUNTIME.md) are owned
 `at-spi2-core`, `gstreamer1`, `libaccounts-glib`, `libwacom`
 and `libstdcxx-uke-runtime` producing native `libstdc++`.
 The reviewed complete Fedora sources retain their native APIs;
-optional Python bindings/host utilities are excluded. Historical KDE configuration
-migrations have C++ equivalents. Their target acceptance remains separate from
+optional Python bindings/host utilities are excluded. Their target acceptance remains separate from
 source registration. A GitHub Actions workflow explicitly requests these five
 builds after shared adapter/manifest changes, because a package-subdirectory
 push hook alone may not observe repository-root source changes. The hook value
@@ -48,8 +47,12 @@ The [package testing procedure](docs/PACKAGE-TESTING.md) requires both the
 selected RPM closure and the complete installed root. The original 603-input
 transaction passed its input audit and lifecycle fixtures, but its base image
 contained optional Python GDB helpers in libstdc++; complete-root acceptance
-was rejected. The GNU C++ source addresses that independent base-image
-gate. Current accepted and failed results are recorded by the builder.
+was rejected. The GNU C++ source passed all 6,100 original versioned exports,
+native AArch64 smoke and signed payload checks in build 11077014. A separate
+52-input console selection passed offline installation, actual earlier metadata
+upgrade, complete inherited-root audits and removal. KDE variants remain
+withdrawn and graphical admission blocked. The builder records exact identities,
+accepted gates and excluded failed trials separately.
 
 The owner forbids cloning, forking or rebuilding KDE desktop applications as Uke
 variants. Plasma and Dolphin source targets are withdrawn, their automatic

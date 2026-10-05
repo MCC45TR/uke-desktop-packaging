@@ -236,3 +236,11 @@
   an absolute Source3 pathname mixed with relative `%license` entries. Copy
   the exact Boost license into the prepared source tree and use its relative
   name. Preserve native build/ABI/smoke evidence separately from RPM acceptance.
+- Accepted correction: native build 11077014 produced the signed GNU C++ RPM
+  and complete source RPM. All 6,100 original exports, native smoke, binary
+  signatures and extracted Python/privacy gates passed. The independent
+  52-input console selection subsequently passed offline fresh installation,
+  actual earlier signed metadata upgrade, both complete inherited-root scans
+  and removal. The builder's console report records exact identities, the
+  explicit reviewed vendor transition and an excluded fixture restart mistake.
+  This result does not admit a KDE session or establish device boot.

@@ -37,6 +37,13 @@ The observed COPR fingerprint is
 `D924B10D3E810DABDD8B56B596E7E91491211FCE`. Verify signatures in isolated
 key databases. Exact source hashes identify reviewed official Fedora inputs.
 
+The [current 52-input console record](https://github.com/MCC45TR/uke-fedora-builder/blob/main/reports/CONSOLE-RAWHIDE-2026-10-05.json)
+and [exact input lock](https://github.com/MCC45TR/uke-fedora-builder/blob/main/manifests/CONSOLE-RUNTIME-LOCK-2026-10-05.json)
+passed the sequence above. Initial core installation explicitly allows the
+reviewed Fedora-to-COPR GNU C++ vendor change. A subsequent accidental restart
+of an already completed upgrade fixture is excluded; its successful pre-restart
+export and separate immutable removal snapshot retain their recorded gates.
+
 The [historical desktop report](https://github.com/MCC45TR/uke-fedora-builder/blob/main/reports/DESKTOP-RAWHIDE-2026-10-05.json)
 and [rejected 603-input lock](https://github.com/MCC45TR/uke-fedora-builder/blob/main/manifests/DESKTOP-RUNTIME-REJECTED-603-2026-10-05.json)
 retain bounded input, fresh-install, fixture, actual upgrade and removal passes.
