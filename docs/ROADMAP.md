@@ -15,3 +15,9 @@
 
 The initial repository validates structure and intent only. It claims no build,
 boot, peripheral or physical acceptance.
+
+## 2026-10-05 source implementation
+
+Real source/RPM rules now exist. Source validation and local package inspection
+are separate from native COPR, target transaction and physical acceptance.
+The development package does not claim the initial hardware gates are complete.
