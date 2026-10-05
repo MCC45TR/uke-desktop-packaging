@@ -58,3 +58,12 @@ before dependency parsing; the binary build still requires official KF6 macros.
 The candidate remains experimental until signed RPM payload, dependency,
 fresh-install, upgrade and removal tests pass. Compilation does not demonstrate
 an accessible session, plugin rendering or Uke hardware behavior.
+
+The lean Dolphin variant excludes optional translated HTML manuals while
+retaining application translations, licensing, README and complete source.
+Plasma's separate optional HTML `-doc` subpackage is outside the admitted tablet
+selection: conservative privacy checks match public upstream tutorial examples,
+which are not evidence of leaked builder or owner identities. Runtime binaries
+and the complete selected dependency payload are audited separately from those
+host documentation artifacts. The public test report identifies the exact
+admitted source jobs and runtime package hashes.

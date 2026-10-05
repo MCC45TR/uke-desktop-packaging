@@ -140,7 +140,7 @@
 - Environment: signed Dolphin job 11075175 extracted documentation.
 - Evidence: native C++ compilation, signatures and no-Python payload audit passed.
   The conservative privacy scan rejected translated HTML tutorial text; inspected
-  English content contains the public upstream example `/home/USER/` with a
+  English content contains public upstream home-directory notation with a
   sample person name. This is not evidence of a leaked worker or owner identity.
 - Consequence: the lean native runtime excludes optional translated HTML
   tutorials, retains UI translations, native help metadata, standard licensing
