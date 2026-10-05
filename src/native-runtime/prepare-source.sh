@@ -21,6 +21,7 @@ if [[ $name == libstdcxx-uke-runtime ]]; then
     cp "$project/packaging/$name/$name.spec" "$top/SPECS/"
     cp "$project/src/native-runtime/runtime-smoke.cpp" "$top/SOURCES/"
     cp "$project/src/native-runtime/fedora-exported-symbols.txt" "$top/SOURCES/"
+    cp "$project/packaging/$name/LICENSE.Boost" "$top/SOURCES/"
     cp "$archive" "$top/SOURCES/"
     rpmbuild -bs --nodeps --target aarch64 --define "_topdir $top" "$top/SPECS/$name.spec"
     exit 0

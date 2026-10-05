@@ -6,13 +6,6 @@ on:
       - src/native-runtime/**
       - manifests/native-runtime.json
       - .copr/Makefile
-      - packaging/at-spi2-core/**
-      - packaging/gstreamer1/**
-      - packaging/libaccounts-glib/**
-      - packaging/libwacom/**
-      - packaging/plasma-workspace/**
-      - packaging/dolphin/**
-      - packaging/libstdcxx-uke-runtime/**
   workflow_dispatch:
 permissions:
   contents: read

@@ -175,3 +175,13 @@
   fixture does not establish Plasma startup or physical Uke support.
 - Next validation: build the seventh source, require its capability from the
   core meta and repeat complete root, dependency and lifecycle gates.
+- Failed native trial: job 11076609 prepared and compiled the runtime, then
+  Fedora's default LTO merged intentionally different C++ standard translation
+  units and rejected a versioned assembler alias at final linking. The inherited
+  full GCC build avoids these generic RPM LTO flags. The standalone spec now
+  clears only `_lto_cflags`, retaining other reviewed optimization/hardening
+  flags and the ABI/smoke gates. The failure occurred before binary admission.
+- Build scheduling correction: individual package specifications use COPR's
+  existing subdirectory push hook. The extra Actions workflow now watches only
+  shared adapter/source/manifest changes, so a one-family correction does not
+  request duplicate healthy KDE builds.

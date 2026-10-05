@@ -1,14 +1,16 @@
 %global debug_package %{nil}
+%global _lto_cflags %{nil}
 %global source_date 20260819
 Name: libstdcxx-uke-runtime
 Version: 16.2.1
 Release: 2.uke1%{?dist}.1
 Summary: Native GNU C++ runtime source build for the Uke package selection
-License: GPL-3.0-or-later WITH GCC-exception-3.1
+License: GPL-3.0-or-later AND LGPL-3.0-or-later AND (GPL-3.0-or-later WITH GCC-exception-3.1) AND (GPL-3.0-or-later WITH Texinfo-exception) AND (LGPL-2.1-or-later WITH GCC-exception-2.0) AND (GPL-2.0-or-later WITH GCC-exception-2.0) AND (GPL-2.0-or-later WITH GNU-compiler-exception) AND BSL-1.0 AND GFDL-1.3-or-later AND Linux-man-pages-copyleft-2-para AND SunPro AND BSD-1-Clause AND BSD-2-Clause AND BSD-2-Clause-Views AND BSD-3-Clause AND BSD-4-Clause AND BSD-Source-Code AND Zlib AND MIT AND Apache-2.0 AND (Apache-2.0 WITH LLVM-Exception) AND ZPL-2.1 AND ISC AND LicenseRef-Fedora-Public-Domain AND HP-1986 AND curl AND Martin-Birgmeier AND HPND-Markus-Kuhn AND dtoa AND SMLNJ AND AMD-newlib AND OAR AND HPND-merchantability-variant AND HPND-Intel
 URL: https://gcc.gnu.org/onlinedocs/libstdc++/
 Source0: gcc-%{version}-%{source_date}.tar.xz
 Source1: runtime-smoke.cpp
 Source2: fedora-exported-symbols.txt
+Source3: LICENSE.Boost
 Source99: gcc-16.2.1-2.fc46.1.src.rpm
 Patch4: gcc16-libtool-no-rpath.patch
 ExclusiveArch: aarch64
@@ -34,6 +36,9 @@ checks the original versioned symbol set and executes a native C++ smoke test.
 # Remaining Fedora patches affect compilers, other languages or HTML manuals;
 # the complete original source RPM is retained as Source99 for provenance.
 %patch -P 4 -p0
+sed -n '1,39p' libstdc++-v3/src/c++17/fast_float/fast_float.h > NOTICE.fast-float
+sed -n '1,17p' libstdc++-v3/src/c++17/ryu/d2s.c > NOTICE.ryu
+sed -n '1,/^#ifndef/p' libbacktrace/backtrace.h | sed '$d' > NOTICE.libbacktrace
 %build
 mkdir -p senemos-libstdcxx-build
 cd senemos-libstdcxx-build
@@ -59,7 +64,7 @@ install -Dm755 senemos-libstdcxx-build/src/.libs/libstdc++.so.6.0.36 %{buildroot
 ln -s libstdc++.so.6.0.36 %{buildroot}%{_libdir}/libstdc++.so.6
 if find %{buildroot} -type f \( -name '*.py' -o -name '*.pyc' -o -name '*.pyo' \) -print | grep .; then exit 1; fi
 %files -n libstdc++
-%license COPYING3 COPYING.RUNTIME
+%license COPYING3 COPYING.RUNTIME NOTICE.fast-float NOTICE.ryu NOTICE.libbacktrace %{SOURCE3}
 %{_libdir}/libstdc++.so.6
 %{_libdir}/libstdc++.so.6.0.36
 %changelog
