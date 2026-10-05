@@ -94,3 +94,7 @@
   helper users are deliberately outside this native-runtime selection.
 - Next validation: audit every signed native binary payload and re-run complete
   fresh-install/upgrade/removal with the hard no-Python dependency gate.
+- Additional source-factory gate: the minimal compiler image deliberately lacks
+  KF6 RPM macros. The shared source factory now installs official kf6-rpm-macros
+  before generating KDE source RPMs; this also resolves Dolphin's inherited
+  versioned BuildRequires before mock's binary dependency solver runs.
