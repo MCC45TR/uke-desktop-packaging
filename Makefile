@@ -62,3 +62,6 @@ track-stable:
 	mv manifests/material-decoration.json.part manifests/material-decoration.json
 	sed -i "s/^%global upstream_commit .*/%global upstream_commit $$commit/; s/^Version:.*/Version:        $$version/" packaging/material-decoration/material-decoration.spec
 	$(MAKE) validate
+.PHONY: test-native
+test-native:
+	bash tests/native-migrations.sh

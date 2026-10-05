@@ -10,3 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - run: make validate
+      - name: Prepare official native host test dependencies
+        run: sudo apt-get update && sudo apt-get install -y g++ pkg-config qt6-base-dev
+      - name: Test native configuration migrations on host fixtures
+        run: make test-native
