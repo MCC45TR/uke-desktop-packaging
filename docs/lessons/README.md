@@ -68,3 +68,29 @@
   zero-fuzz application. An EOF blank context line then failed publication's
   whitespace check; narrowing the context removed it. Original failed logs and
   the corrected preparation are retained separately.
+
+## UKE-DESKTOP-005 — inspect payloads as well as dependency names
+
+- Date: 2026-10-05.
+- Environment: isolated Rawhide AArch64 dependency transaction and official RPM archive audit.
+- Evidence: the complete Plasma selection resolved six Python packages; five
+  native source families declared the immediate interpreter dependencies.
+  An independent 600-RPM file-list audit found two additional Python scripts
+  in Dolphin, despite their missing interpreter Requires.
+- Consequence: six exact-pinned official source variants remove optional host
+  utilities/bindings or replace required migrations with native C++ helpers.
+  The core selection refuses the Python ABI and Plasma requires explicit native
+  variant capabilities. Neither RPM metadata nor successful compilation alone
+  is sufficient target evidence.
+- Host evidence: calendar and Dolphin C++ fixtures passed transformations,
+  preservation/idempotence and unsafe-input checks. These are host fixtures,
+  separate from COPR binary builds and target transactions.
+- Correction: inherited Plasma source metadata used a KF6 minimum-version macro
+  unavailable in some source factories. Its inspected 6.7.91 value is explicit.
+  An inherited nonchronological Fedora changelog is retained in the original
+  archive, while the generated candidate records its own change.
+- Uncertainty: native rebuilds and the complete corrected runtime transaction
+  remain required. Optional Python accessibility/account consumers and Wacom
+  helper users are deliberately outside this native-runtime selection.
+- Next validation: audit every signed native binary payload and re-run complete
+  fresh-install/upgrade/removal with the hard no-Python dependency gate.

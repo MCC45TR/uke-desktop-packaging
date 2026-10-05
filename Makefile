@@ -9,10 +9,18 @@ validate:
 	jq -e '(.commit|test("^[a-f0-9]{40}$$")) and (.sha256|test("^[a-f0-9]{64}$$")) and (.version|test("^[0-9]+[.][0-9]+$$")) and .hardware_specific==false and .hardware_tested==false' manifests/material-decoration.json >/dev/null
 	test "$$(sed -n 's/^%global upstream_commit //p' packaging/material-decoration/material-decoration.spec)" = "$$(jq -r .commit manifests/material-decoration.json)"
 	! grep -Eq '^(Requires|Recommends):.*(python|pypy|libpython|nabu)' packaging/*/*.spec
+	jq -e '.hardware_tested==false and (.packages|length==6) and all(.packages[]; (.sha256|test("^[a-f0-9]{64}$$")))' manifests/native-runtime.json >/dev/null
+	bash -n src/native-runtime/prepare-source.sh
 srpm: validate
-	case '$(PACKAGE)' in material-decoration|plymouth-uke) ;; *) echo 'Unsupported package' >&2; exit 1;; esac
+	case '$(PACKAGE)' in material-decoration|plymouth-uke|at-spi2-core|gstreamer1|libaccounts-glib|libwacom|plasma-workspace|dolphin) ;; *) echo 'Unsupported package' >&2; exit 1;; esac
 	top="$$(realpath -m "$(outdir)/rpmbuild")"
 	mkdir -p "$$top"/{BUILD,BUILDROOT,RPMS,SRPMS,SOURCES,SPECS}
+	if jq -e --arg name '$(PACKAGE)' 'any(.packages[]; .name==$$name)' manifests/native-runtime.json >/dev/null; then
+		bash src/native-runtime/prepare-source.sh '$(PACKAGE)' "$$top" "$(CURDIR)"
+		mkdir -p "$(outdir)"
+		install -m644 "$$top/SRPMS/"*.src.rpm "$(outdir)/"
+		exit 0
+	fi
 	if test '$(PACKAGE)' = material-decoration; then
 		commit=$$(jq -er .commit manifests/material-decoration.json)
 		archive="$(CURDIR)/referances/material-decoration/$$commit.tar.gz"
