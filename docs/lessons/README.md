@@ -118,3 +118,18 @@
   including for GObject-introspection. The earlier statement that the inherited
   libwacom spec omitted GCC was incorrect. This is an adapter defect, not an
   upstream packaging defect. The explicit GCC requirement remains harmless.
+
+## UKE-DESKTOP-007 — audit all generated binary subpackages
+
+- Date: 2026-10-05.
+- Environment: native GStreamer source build 11075171, all-subpackage BUILDROOT.
+- Evidence: C compilation completed, but the installed-file policy gate rejected
+  three GDB Python helpers in the developer package. The original runtime-only
+  file-list audit correctly did not include this SDK package; its result was
+  insufficient for the entire generated source family.
+- Consequence: release `1.uke2` excludes the optional GDB Python helper directory
+  and its file-list entries alongside the two installed host documentation
+  scanners. Native media, debug logging and plugin scanning remain intact.
+- Uncertainty: host GDB's Python convenience layer is outside this native SDK.
+- Next validation: inspect every generated binary RPM, then the actual selected
+  complete runtime. Neither successful C compilation nor one subpackage suffices.

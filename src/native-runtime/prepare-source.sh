@@ -21,7 +21,11 @@ spec="$top/SOURCES/$name.spec"
 case $name in
     at-spi2-core) cleanup='rm -rf %{buildroot}%{_libdir}/python*';;
     libaccounts-glib) cleanup='rm -rf %{buildroot}%{_libdir}/python*';;
-    gstreamer1) cleanup='rm -f %{buildroot}%{_libexecdir}/gstreamer-%{majorminor}/gst-hotdoc-plugins-scanner %{buildroot}%{_libexecdir}/gstreamer-%{majorminor}/gst-plugins-doc-cache-generator';;
+    gstreamer1) cleanup=$(cat <<'CLEAN'
+rm -f %{buildroot}%{_libexecdir}/gstreamer-%{majorminor}/gst-hotdoc-plugins-scanner %{buildroot}%{_libexecdir}/gstreamer-%{majorminor}/gst-plugins-doc-cache-generator
+rm -rf %{buildroot}%{_datadir}/gstreamer-%{majorminor}/gdb %{buildroot}%{_datadir}/gdb/auto-load
+CLEAN
+);;
     libwacom) cleanup='rm -f %{buildroot}%{_bindir}/libwacom-update-db %{buildroot}%{_bindir}/libwacom-show-stylus %{buildroot}%{_mandir}/man1/libwacom-show-stylus.1*';;
     plasma-workspace)
         cp "$project/src/native-runtime/calendar-migration.cpp" "$top/SOURCES/"
@@ -76,6 +80,7 @@ awk -v name="$name" -v release="$native_release" -v cleanup="$cleanup" '
     name=="at-spi2-core" && /%\{python3_sitearch\}/ { next }
     name=="libaccounts-glib" && (/^Requires:.*python3-gobject/ || /%\{python3_sitearch\}/) { next }
     name=="gstreamer1" && /^%\{_libexecdir\}.*(gst-hotdoc-plugins-scanner|gst-plugins-doc-cache-generator)/ { next }
+    name=="gstreamer1" && /^(%dir )?%\{_datadir\}.*(gstreamer.*\/gdb|gdb\/auto-load)/ { next }
     name=="libwacom" && /^Requires:.*python3-libevdev/ { next }
     name=="libwacom" && /^%\{_bindir\}.*(libwacom-update-db|libwacom-show-stylus)/ { next }
     name=="libwacom" && /^%\{_mandir\}.*libwacom-show-stylus/ { next }
