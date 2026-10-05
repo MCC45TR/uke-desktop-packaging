@@ -38,6 +38,7 @@ checks the original versioned symbol set and executes a native C++ smoke test.
 %patch -P 4 -p0
 # GCC's top-level build normally creates this target threading header.
 cp libgcc/gthr-posix.h libgcc/gthr-default.h
+cp %{SOURCE3} LICENSE.Boost
 sed -n '1,39p' libstdc++-v3/src/c++17/fast_float/fast_float.h > NOTICE.fast-float
 sed -n '1,17p' libstdc++-v3/src/c++17/ryu/d2s.c > NOTICE.ryu
 sed -n '1,/^#ifndef/p' libbacktrace/backtrace.h | sed '$d' > NOTICE.libbacktrace
@@ -73,7 +74,7 @@ install -Dm755 senemos-libstdcxx-build/src/.libs/libstdc++.so.6.0.36 %{buildroot
 ln -s libstdc++.so.6.0.36 %{buildroot}%{_libdir}/libstdc++.so.6
 if find %{buildroot} -type f \( -name '*.py' -o -name '*.pyc' -o -name '*.pyo' \) -print | grep .; then exit 1; fi
 %files -n libstdc++
-%license COPYING3 COPYING.RUNTIME NOTICE.fast-float NOTICE.ryu NOTICE.libbacktrace %{SOURCE3}
+%license COPYING3 COPYING.RUNTIME NOTICE.fast-float NOTICE.ryu NOTICE.libbacktrace LICENSE.Boost
 %{_libdir}/libstdc++.so.6
 %{_libdir}/libstdc++.so.6.0.36
 %changelog

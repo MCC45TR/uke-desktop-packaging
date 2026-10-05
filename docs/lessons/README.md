@@ -231,3 +231,8 @@
   `CXX` override to recursive modules. Pass `-nostdinc++` through `CXXFLAGS`,
   explicitly forwarded by `AM_MAKEFLAGS`. This preserves the observed header
   diagnosis while correcting the ineffective first recipe.
+- Native result: trial 11076968 passed the complete unchanged 6,100-symbol
+  gate and executed the real native C++ smoke fixture. Packaging then rejected
+  an absolute Source3 pathname mixed with relative `%license` entries. Copy
+  the exact Boost license into the prepared source tree and use its relative
+  name. Preserve native build/ABI/smoke evidence separately from RPM acceptance.
