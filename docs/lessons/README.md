@@ -98,3 +98,16 @@
   KF6 RPM macros. The shared source factory now installs official kf6-rpm-macros
   before generating KDE source RPMs; this also resolves Dolphin's inherited
   versioned BuildRequires before mock's binary dependency solver runs.
+
+## UKE-DESKTOP-006 — declare the native compiler in a minimal build root
+
+- Date: 2026-10-05.
+- Environment: native Rawhide AArch64 COPR binary job 11075173.
+- Evidence: source collection passed, then Meson reported `gcc --version` could
+  not execute because the compiler was absent. The inherited libwacom spec did
+  not declare GCC; the project's minimal worker does not imply Fedora's full
+  default build group.
+- Consequence: the libwacom variant now explicitly requires GCC and increments
+  its candidate release to `1.uke2`. A source/RPM collection result cannot prove
+  native dependency closure or compilation.
+- Next validation: replacement native compilation and signed runtime audit.

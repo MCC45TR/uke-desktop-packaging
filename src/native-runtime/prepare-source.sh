@@ -67,6 +67,7 @@ awk -v name="$name" -v release="$native_release" -v cleanup="$cleanup" '
         print; print "Provides: senemos-native-runtime(" name ") = %{version}-%{release}"
         print "ExclusiveArch: aarch64"
         print "BuildRequires: python3 = 3.15.0~rc2-1.fc46"
+        if (name=="libwacom") print "BuildRequires: gcc"
         next
     }
     /^License:/ && name=="plasma-workspace" { print; print "ExclusiveArch: aarch64"; print "BuildRequires: python3 = 3.15.0~rc2-1.fc46"; next }

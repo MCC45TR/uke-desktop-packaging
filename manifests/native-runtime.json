@@ -34,7 +34,7 @@
       "name": "libwacom",
       "version": "2.20.0",
       "release": "1.fc46",
-      "native_release": "1.uke1",
+      "native_release": "1.uke2",
       "sha256": "1578133a5ae62096e74c53540aea79b38f537f8e65ff59ecc373c61fd964ae89",
       "delta": "Exclude Python DB updater and Python stylus viewer; retain native library, device listings and upstream data"
     },
