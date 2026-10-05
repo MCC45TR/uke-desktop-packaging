@@ -13,7 +13,7 @@ This repository owns two real source families for Fedora Rawhide AArch64:
   regenerate an initramfs, select a boot entry or copy Nabu geometry/artwork.
 
 `make validate` checks the source contracts. `make srpm PACKAGE=NAME` creates
-that family's complete SRPM. Each `packaging/NAME/.copr/Makefile` exports only its
+that family's complete SRPM. The repository-root `.copr/Makefile`, invoked from each package subdirectory, exports only its
 source RPM; source work stays outside COPR's unprivileged collection directory.
 COPR builds binaries without network access. Main-branch push hooks rebuild both
 families. The Material stable tracker fetches published upstream releases, pins

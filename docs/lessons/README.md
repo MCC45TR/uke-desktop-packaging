@@ -30,3 +30,20 @@
   binary acceptance, graphical rendering or physical operation.
 - Next validation: collect native COPR and signed target transaction results in
   distinct reports, then separately qualify hardware.
+
+## UKE-DESKTOP-003 — COPR locates its source factory at repository root
+
+- Date: 2026-10-05.
+- Environment: COPR source-generation mock with two configured subdirectories.
+- Evidence: failed source jobs 11075047/11075048 and repeated 11075049/11075050;
+  their native source command selected the repository-root `.copr/Makefile` while
+  setting its working directory to `packaging/PACKAGE`.
+- Finding: a `.copr/Makefile` placed inside each package directory was not selected.
+  The ordinary source generation passed locally, but the remote factory stopped
+  before an SRPM was collected.
+- Consequence: one root factory now validates the working-directory package name,
+  dispatches to the ordinary root Makefile, and exports only its mode-0644 SRPM.
+  The ineffective nested factory files were removed.
+- Uncertainty: the corrected factory still requires its own remote collection
+  and binary build results; local source success is not substituted for them.
+- Next validation: collect replacement source jobs and audit signed target packages.
