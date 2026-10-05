@@ -1,5 +1,12 @@
 # Python-free Fedora native runtime variants
 
+**Current policy:** Never clone, fork or rebuild KDE desktop applications as Uke
+variants. Plasma/Dolphin recipes described in older evidence below are withdrawn
+from the active source allowlist and automatic COPR publication. Five non-KDE
+source families remain admitted for build evaluation. Use original distribution
+KDE applications; complete graphical admission remains blocked while their
+Python payloads conflict with the target policy.
+
 The first complete Plasma dependency transaction pulled Python through optional
 GI bindings, installed documentation utilities and configuration migrations.
 An extracted official-RPM inventory also found Dolphin migration scripts even
@@ -90,3 +97,10 @@ original AArch64 Fedora library and execute the native C++ concurrency,
 exception, filesystem, ranges and calendar fixture. The baseline text hash is
 `db74b5e1acc6e2a6ce6182c63d57ad61cc79278daa811c0fde65bd0a411ec1fd`.
 ABI, signed payload and complete installed-root checks remain independent.
+
+Native trial 11076668 linked without LTO, then correctly failed the original
+symbol gate: the standalone configure probe could not find GCC's generated
+`gthr-default.h`, disabling C++ threads and omitting thread ABI symbols. The
+source preparation now creates the POSIX header as the top-level GCC build
+does; configure must explicitly define `_GLIBCXX_HAS_GTHREADS` before compilation.
+The original symbol baseline is retained unchanged.

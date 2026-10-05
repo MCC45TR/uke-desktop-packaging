@@ -39,22 +39,6 @@
       "delta": "Exclude Python DB updater and Python stylus viewer; retain native library, device listings and upstream data"
     },
     {
-      "name": "plasma-workspace",
-      "version": "6.7.91",
-      "release": "1.fc46",
-      "native_release": "1.uke1",
-      "sha256": "27a0c963782f58e5dcaaebc105a71de9b2bae22cae8284e1c49fcfbec9e4343d",
-      "delta": "Replace the calendar plugin-ID migration with an atomic native C++/QtCore helper; preserve stock session and panel policy"
-    },
-    {
-      "name": "dolphin",
-      "version": "26.08.1",
-      "release": "1.fc46",
-      "native_release": "1.uke2",
-      "sha256": "63bc209615c39f7e928b5f42728a7da5ae25a0748d67557be6ee58fb362bd5e0",
-      "delta": "Replace toolbar and split-view shortcut configuration migrations with atomic native C++/Qt helpers"
-    },
-    {
       "name": "libstdcxx-uke-runtime",
       "source_name": "gcc",
       "version": "16.2.1",
@@ -68,5 +52,29 @@
     "package": "libstdc++-16.2.1-2.fc46.1.aarch64",
     "symbol_count": 6100,
     "symbol_sha256": "db74b5e1acc6e2a6ce6182c63d57ad61cc79278daa811c0fde65bd0a411ec1fd"
-  }
+  },
+  "withdrawn_packages": [
+    {
+      "name": "plasma-workspace",
+      "version": "6.7.91",
+      "release": "1.fc46",
+      "native_release": "1.uke1",
+      "sha256": "27a0c963782f58e5dcaaebc105a71de9b2bae22cae8284e1c49fcfbec9e4343d",
+      "delta": "Replace the calendar plugin-ID migration with an atomic native C++/QtCore helper; preserve stock session and panel policy",
+      "reason": "Owner forbids cloning or producing KDE desktop application variants; use original distribution applications",
+      "automatic_build": false,
+      "target_admitted": false
+    },
+    {
+      "name": "dolphin",
+      "version": "26.08.1",
+      "release": "1.fc46",
+      "native_release": "1.uke2",
+      "sha256": "63bc209615c39f7e928b5f42728a7da5ae25a0748d67557be6ee58fb362bd5e0",
+      "delta": "Replace toolbar and split-view shortcut configuration migrations with atomic native C++/Qt helpers",
+      "reason": "Owner forbids cloning or producing KDE desktop application variants; use original distribution applications",
+      "automatic_build": false,
+      "target_admitted": false
+    }
+  ]
 }

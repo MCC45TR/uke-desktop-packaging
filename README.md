@@ -31,13 +31,13 @@ Neither decoration compilation nor theme installation proves Uke graphics or boo
 [Uke package hub](https://github.com/MCC45TR/uke-linux/blob/main/docs/PACKAGE-HUB.md)
 · [Development COPR](https://copr.fedorainfracloud.org/coprs/mcc45tr/uke-linux-test/)
 
-Seven [native runtime source variants](docs/NATIVE-RUNTIME.md) are also owned here:
+Five admitted [native runtime source variants](docs/NATIVE-RUNTIME.md) are owned here:
 `at-spi2-core`, `gstreamer1`, `libaccounts-glib`, `libwacom`, `plasma-workspace`
-and `dolphin`, plus `libstdcxx-uke-runtime` producing native `libstdc++`.
+and `libstdcxx-uke-runtime` producing native `libstdc++`.
 The reviewed complete Fedora sources retain their native APIs;
 optional Python bindings/host utilities are excluded and required configuration
 migrations have C++ equivalents. Their target acceptance remains separate from
-source registration. A GitHub Actions workflow explicitly requests all seven
+source registration. A GitHub Actions workflow explicitly requests these five
 builds after shared adapter/manifest changes, because a package-subdirectory
 push hook alone may not observe repository-root source changes. The hook value
 is held only in an encrypted repository secret. Healthy COPR jobs are preserved.
@@ -50,3 +50,11 @@ transaction passed its input audit and lifecycle fixtures, but its base image
 contained optional Python GDB helpers in libstdc++; complete-root acceptance
 was rejected. The seventh native source addresses that independent base-image
 gate. Current accepted and failed results are recorded by the builder.
+
+The owner forbids cloning, forking or rebuilding KDE desktop applications as Uke
+variants. Plasma and Dolphin source targets are withdrawn, their automatic
+COPR jobs are disabled, and the source allowlist rejects them before download.
+Use original distribution KDE applications. Those applications currently have
+Python payloads incompatible with the target policy, so complete KDE admission
+is blocked rather than bypassing either requirement. Earlier source, helper
+and package test records are historical evidence, not admitted runtime recipes.

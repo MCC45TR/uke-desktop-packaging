@@ -36,6 +36,8 @@ checks the original versioned symbol set and executes a native C++ smoke test.
 # Remaining Fedora patches affect compilers, other languages or HTML manuals;
 # the complete original source RPM is retained as Source99 for provenance.
 %patch -P 4 -p0
+# GCC's top-level build normally creates this target threading header.
+cp libgcc/gthr-posix.h libgcc/gthr-default.h
 sed -n '1,39p' libstdc++-v3/src/c++17/fast_float/fast_float.h > NOTICE.fast-float
 sed -n '1,17p' libstdc++-v3/src/c++17/ryu/d2s.c > NOTICE.ryu
 sed -n '1,/^#ifndef/p' libbacktrace/backtrace.h | sed '$d' > NOTICE.libbacktrace
@@ -46,9 +48,9 @@ export CC=gcc CXX=g++
 export CFLAGS="%{build_cflags}" CXXFLAGS="%{build_cxxflags}" LDFLAGS="%{build_ldflags}"
 ../libstdc++-v3/configure --prefix=%{_prefix} --libdir=%{_libdir} \
   --build=%{_build} --host=%{_host} --disable-multilib \
-  --enable-shared --enable-threads=posix --enable-__cxa_atexit \
-  --enable-gnu-unique-object --enable-libstdcxx-backtrace \
+  --enable-shared --enable-libstdcxx-threads=yes --enable-libstdcxx-backtrace \
   --with-libstdcxx-zoneinfo=%{_datadir}/zoneinfo --disable-libstdcxx-pch
+grep -Fx '#define _GLIBCXX_HAS_GTHREADS 1' config.h
 %make_build
 %check
 cd senemos-libstdcxx-build

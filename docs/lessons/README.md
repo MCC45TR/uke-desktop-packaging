@@ -185,3 +185,24 @@
   existing subdirectory push hook. The extra Actions workflow now watches only
   shared adapter/source/manifest changes, so a one-family correction does not
   request duplicate healthy KDE builds.
+
+## UKE-DESKTOP-010 — owner policy withdraws KDE application variants
+
+- Date: 2026-10-05.
+- Environment: source allowlists, GitHub workflow and COPR Rawhide AArch64.
+- Evidence: the owner explicitly forbids cloning KDE desktop applications.
+  Plasma/Dolphin automatic builds were disabled and their active jobs 11076607,
+  11076665 and 11076667 were canceled following this new incompatible scope.
+- Consequence: Make/source factories reject both applications before retrieving
+  an archive; the shared workflow requests only five non-KDE source families.
+  Existing artifacts are retained as historical evidence and withdrawn from
+  the active channel. Original distribution applications remain authoritative.
+- Uncertainty: original Plasma/Dolphin contain Python components. A complete
+  KDE selection cannot satisfy the current target rule, so its admission stays
+  blocked and the desktop metadata does not install a graphical session.
+- Next validation: verify source rejection and remote automatic-build settings;
+  complete native console/runtime tests independently of KDE.
+- Native-library correction: trial 11076668 linked but failed the unchanged
+  6,100-symbol baseline because GCC's standalone thread probe lacked the
+  generated POSIX header. Preparation now creates that header and requires the
+  thread macro before compilation. No ABI baseline is reduced to pass the test.
