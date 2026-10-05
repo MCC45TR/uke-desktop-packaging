@@ -30,3 +30,15 @@ Neither decoration compilation nor theme installation proves Uke graphics or boo
 
 [Uke package hub](https://github.com/MCC45TR/uke-linux/blob/main/docs/PACKAGE-HUB.md)
 · [Development COPR](https://copr.fedorainfracloud.org/coprs/mcc45tr/uke-linux-test/)
+
+Six [native runtime source variants](docs/NATIVE-RUNTIME.md) are also owned here:
+`at-spi2-core`, `gstreamer1`, `libaccounts-glib`, `libwacom`, `plasma-workspace`
+and `dolphin`. The reviewed complete Fedora sources retain their native APIs;
+optional Python bindings/host utilities are excluded and required configuration
+migrations have C++ equivalents. Their target acceptance remains separate from
+source registration. A GitHub Actions workflow explicitly requests all six
+builds after shared adapter/manifest changes, because a package-subdirectory
+push hook alone may not observe repository-root source changes. The hook value
+is held only in an encrypted repository secret. Healthy COPR jobs are preserved.
+These sources use reviewed Fedora pins; automatic builds do not silently admit
+arbitrary new Fedora source recipes or assert physical hardware support.
